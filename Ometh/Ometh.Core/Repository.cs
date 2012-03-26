@@ -11,11 +11,11 @@ namespace Ometh.Core
     public class Repository
     {
         private readonly Git git;
-        private readonly HashSet<Commit> commits;
+        private readonly Dictionary<string, Commit> commits;
 
         public IEnumerable<Commit> Commits
         {
-            get { return this.commits; }
+            get { return this.commits.Values; }
         }
 
         public Repository(string path)
@@ -24,12 +24,13 @@ namespace Ometh.Core
                 throw new ArgumentNullException("path");
 
             this.git = new Git(new FileRepository(Path.Combine(path, ".git")));
-            this.commits = new HashSet<Commit>();
+            this.commits = new Dictionary<string, Commit>();
         }
 
         public void Load()
         {
             this.LoadCommits();
+            this.LoadTags();
         }
 
         private void LoadCommits()
@@ -41,7 +42,20 @@ namespace Ometh.Core
 
             foreach (Commit commit in enumerable)
             {
-                this.commits.Add(commit);
+                this.commits.Add(commit.Hash, commit);
+            }
+        }
+
+        private void LoadTags()
+        {
+            var tags = this.git
+                .GetRepository()
+                .GetTags()
+                .ToDictionary(entry => entry.Key, entry => entry.Value.GetObjectId().Name);
+
+            foreach (KeyValuePair<string, string> pair in tags)
+            {
+                this.commits[pair.Value].Tag = pair.Key;
             }
         }
 

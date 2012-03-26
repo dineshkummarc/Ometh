@@ -22,6 +22,13 @@ namespace Ometh.Core
             get { return this.parents; }
         }
 
+        public string Tag { get; set; }
+
+        public bool IsTagged
+        {
+            get { return this.Tag != null; }
+        }
+
         public Commit(string hash, string fullMessage, string shortMessage, string author, DateTime commitTime, IEnumerable<string> parents)
         {
             this.Hash = hash;

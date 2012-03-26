@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -39,7 +40,26 @@
             ItemsSource="{Binding Path=Commits}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ShortMessage}" Header="Message" />
+                    <GridViewColumn Header="Message">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border
+                                        Visibility="{Binding Path=IsTagged, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        Margin="0, 0, 5, 0"
+                                        Padding="2"
+                                        Background="CornflowerBlue">
+                                        <TextBlock
+                                            Text="{Binding Path=Tag}"
+                                            Foreground="White" />
+                                    </Border>
+                                    <TextBlock
+                                        Text="{Binding Path=ShortMessage}"
+                                        VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Author}" Header="Author" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=CommitTime}" Header="Date" />
                 </GridView>

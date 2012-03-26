@@ -23,6 +23,16 @@ namespace Ometh.View
             get { return this.commit.CommitTime; }
         }
 
+        public string Tag
+        {
+            get { return this.commit.Tag; }
+        }
+
+        public bool IsTagged
+        {
+            get { return this.commit.IsTagged; }
+        }
+
         public CommitViewModel(Commit commit)
         {
             this.commit = commit;
