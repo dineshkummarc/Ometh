@@ -41,8 +41,9 @@ namespace Ometh.View
                     param =>
                     {
                         this.currentRepository = new Repository(this.RepositoryPath);
+                        this.currentRepository.Load();
 
-                        this.Commits = this.currentRepository.Log()
+                        this.Commits = this.currentRepository.Commits
                             .Select(commit => new CommitViewModel(commit));
                     }
                 );
