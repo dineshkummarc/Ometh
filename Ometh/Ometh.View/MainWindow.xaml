@@ -39,6 +39,8 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ShortMessage}" Header="Message" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Author}" Header="Author" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CommitTime}" Header="Date" />
                 </GridView>
             </ListView.View>
         </ListView>

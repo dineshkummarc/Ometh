@@ -24,7 +24,14 @@ namespace Ometh.Core
             return this.git
                 .Log()
                 .Call()
-                .Select(commit => new Commit(commit.GetFullMessage(), commit.GetShortMessage()));
+                .Select(commit =>
+                    new Commit
+                    (
+                        commit.GetFullMessage(),
+                        commit.GetShortMessage(),
+                        commit.GetAuthorIdent().GetName(),
+                        commit.GetCommitterIdent().GetWhen()
+                    ));
         }
     }
 }
