@@ -27,8 +27,12 @@
             Grid.Row="0"
             Orientation="Horizontal">
             <TextBox
-                Width="200"
+                Width="250"
                 Text="{Binding Path=RepositoryPath}"/>
+            <Button
+                Margin="5, 0, 0, 0"
+                Content="Browse"
+                Click="BrowseButtonClick"/>
             <Button
                 Margin="5, 0, 0, 0"
                 Content="Open Repository"
