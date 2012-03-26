@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Ometh.Core
 {
     public class Commit : IEquatable<Commit>
     {
+        private readonly HashSet<string> parents;
+
         public string ShortMessage { get; private set; }
 
         public string FullMessage { get; private set; }
@@ -14,13 +17,25 @@ namespace Ometh.Core
 
         public string Hash { get; private set; }
 
-        public Commit(string hash, string fullMessage, string shortMessage, string author, DateTime commitTime)
+        public IEnumerable<string> Parents
+        {
+            get { return this.parents; }
+        }
+
+        public Commit(string hash, string fullMessage, string shortMessage, string author, DateTime commitTime, IEnumerable<string> parents)
         {
             this.Hash = hash;
             this.FullMessage = fullMessage;
             this.ShortMessage = shortMessage;
             this.Author = author;
             this.CommitTime = commitTime;
+
+            this.parents = new HashSet<string>();
+
+            foreach (string commit in parents)
+            {
+                this.parents.Add(commit);
+            }
         }
 
         public bool Equals(Commit other)

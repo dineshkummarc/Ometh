@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NGit.Api;
+using NGit.Revwalk;
 using NGit.Storage.File;
 
 namespace Ometh.Core
@@ -36,20 +37,25 @@ namespace Ometh.Core
             var enumerable = this.git
                 .Log()
                 .Call()
-                .Select(commit =>
-                    new Commit
-                    (
-                        commit.Name,
-                        commit.GetFullMessage(),
-                        commit.GetShortMessage(),
-                        commit.GetAuthorIdent().GetName(),
-                        commit.GetCommitterIdent().GetWhen()
-                    ));
+                .Select(ToCommit);
 
             foreach (Commit commit in enumerable)
             {
                 this.commits.Add(commit);
             }
+        }
+
+        private static Commit ToCommit(RevCommit commit)
+        {
+            return new Commit
+            (
+                commit.Name,
+                commit.GetFullMessage(),
+                commit.GetShortMessage(),
+                commit.GetAuthorIdent().GetName(),
+                commit.GetCommitterIdent().GetWhen(),
+                commit.Parents.Select(p => p.Name)
+            );
         }
     }
 }
