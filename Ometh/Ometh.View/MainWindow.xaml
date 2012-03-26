@@ -35,6 +35,7 @@
         </StackPanel>
         <ListView
             Grid.Row="1"
+            ScrollViewer.CanContentScroll="True"
             ItemsSource="{Binding Path=Commits}">
             <ListView.View>
                 <GridView>
