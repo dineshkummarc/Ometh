@@ -2,11 +2,14 @@
 {
     public class Commit
     {
-        public string Message { get; private set; }
+        public string ShortMessage { get; private set; }
 
-        public Commit(string message)
+        public string FullMessage { get; private set; }
+
+        public Commit(string fullMessage, string shortMessage)
         {
-            this.Message = message;
+            this.FullMessage = fullMessage;
+            this.ShortMessage = shortMessage;
         }
     }
 }

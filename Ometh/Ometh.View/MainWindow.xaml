@@ -29,7 +29,7 @@
             ItemsSource="{Binding Path=Commits}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Message}" Header="Message" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ShortMessage}" Header="Message" />
                 </GridView>
             </ListView.View>
         </ListView>

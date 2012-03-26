@@ -7,9 +7,9 @@ namespace Ometh.View
     {
         private readonly Commit commit;
 
-        public string Message
+        public string ShortMessage
         {
-            get { return this.commit.Message; }
+            get { return this.commit.ShortMessage; }
         }
 
         public CommitViewModel(Commit commit)
