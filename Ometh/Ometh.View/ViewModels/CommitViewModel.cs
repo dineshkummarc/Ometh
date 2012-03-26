@@ -2,7 +2,7 @@
 using Ometh.Core;
 using Rareform.Patterns.MVVM;
 
-namespace Ometh.View
+namespace Ometh.View.ViewModels
 {
     internal class CommitViewModel : ViewModelBase<CommitViewModel>
     {

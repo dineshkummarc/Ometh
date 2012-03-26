@@ -2,11 +2,11 @@
     x:Class="Ometh.View.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:View="clr-namespace:Ometh.View"
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:ViewModels="clr-namespace:Ometh.View.ViewModels"
     Title="Ometh">
     <Window.DataContext>
-        <View:MainViewModel x:Name="viewModel" />
+        <ViewModels:MainViewModel x:Name="viewModel" />
     </Window.DataContext>
     <Window.Resources>
         <ResourceDictionary>

@@ -4,7 +4,7 @@ using System.Windows.Input;
 using Ometh.Core;
 using Rareform.Patterns.MVVM;
 
-namespace Ometh.View
+namespace Ometh.View.ViewModels
 {
     internal class MainViewModel : ViewModelBase<MainViewModel>
     {
