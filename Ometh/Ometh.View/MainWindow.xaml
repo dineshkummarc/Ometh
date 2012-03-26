@@ -3,10 +3,35 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    Title="MainWindow"
-    d:DesignHeight="400"
-    d:DesignWidth="600">
+    xmlns:View="clr-namespace:Ometh.View"
+    Title="MainWindow">
+    <Window.DataContext>
+        <View:MainViewModel x:Name="viewModel" />
+    </Window.DataContext>
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            Orientation="Horizontal">
+            <TextBox
+                Width="200"
+                Text="{Binding Path=RepositoryPath}"/>
+            <Button
+                Margin="5, 0, 0, 0"
+                Content="Open Repository"
+                Command="{Binding Path=OpenRepositoryCommand}"/>
+        </StackPanel>
+        <ListView
+            Grid.Row="1"
+            ItemsSource="{Binding Path=Commits}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Message}" Header="Message" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

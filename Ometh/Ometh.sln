@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ometh.Core", "Ometh.Core\Ometh.Core.csproj", "{64BFEF05-68A1-4AA2-AB99-E3FBBBEB05BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ometh.View", "Ometh.View\Ometh.View.csproj", "{F0119790-060A-4115-96A0-232F768097BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{64BFEF05-68A1-4AA2-AB99-E3FBBBEB05BE} = {64BFEF05-68A1-4AA2-AB99-E3FBBBEB05BE}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
