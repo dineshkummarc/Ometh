@@ -32,11 +32,11 @@
             <Button
                 Margin="5, 0, 0, 0"
                 Content="Browse"
-                Click="BrowseButtonClick"/>
+                Click="BrowseButtonClick" />
             <Button
                 Margin="5, 0, 0, 0"
                 Content="Open Repository"
-                Command="{Binding Path=OpenRepositoryCommand}"/>
+                Command="{Binding Path=OpenRepositoryCommand}" />
         </StackPanel>
         <ListView
             Grid.Row="1"

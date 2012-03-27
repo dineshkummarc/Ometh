@@ -49,7 +49,8 @@ namespace Ometh.View.ViewModels
 
                         this.Commits = this.currentRepository.Commits
                             .Select(commit => new CommitViewModel(commit));
-                    }
+                    },
+                    param => !this.HasErrors(Reflector.GetMemberName(() => this.RepositoryPath))
                 );
             }
         }
@@ -87,6 +88,11 @@ namespace Ometh.View.ViewModels
         public string Error
         {
             get { return null; }
+        }
+
+        public bool HasErrors(params string[] propertyName)
+        {
+            return propertyName.Any(property => !String.IsNullOrEmpty(this[property]));
         }
     }
 }
