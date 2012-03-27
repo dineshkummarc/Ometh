@@ -28,7 +28,7 @@
             Orientation="Horizontal">
             <TextBox
                 Width="250"
-                Text="{Binding Path=RepositoryPath}"/>
+                Text="{Binding Path=RepositoryPath, ValidatesOnDataErrors=True, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"/>
             <Button
                 Margin="5, 0, 0, 0"
                 Content="Browse"

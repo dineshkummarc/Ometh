@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NGit.Api;
+using NGit.Errors;
 using NGit.Revwalk;
 using NGit.Storage.File;
 
@@ -25,6 +26,12 @@ namespace Ometh.Core
 
             this.git = new Git(new FileRepository(Path.Combine(path, ".git")));
             this.commits = new Dictionary<string, Commit>();
+        }
+
+        public static bool IsValidRepository(string path)
+        {
+            // TODO: Check if the .git directory is actually a repository
+            return Directory.Exists(Path.Combine(path, ".git"));
         }
 
         public void Load()

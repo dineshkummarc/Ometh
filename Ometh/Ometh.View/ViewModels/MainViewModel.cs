@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using Ometh.Core;
 using Rareform.Patterns.MVVM;
+using Rareform.Reflection;
 
 namespace Ometh.View.ViewModels
 {
-    internal class MainViewModel : ViewModelBase<MainViewModel>
+    internal class MainViewModel : ViewModelBase<MainViewModel>, IDataErrorInfo
     {
         private IEnumerable<CommitViewModel> commits;
         private string repositoryPath;
@@ -48,6 +52,41 @@ namespace Ometh.View.ViewModels
                     }
                 );
             }
+        }
+
+        /// <summary>
+        /// Gets the error message for the property with the given name.
+        /// </summary>
+        /// <returns>The error message for the property. The default is an empty string ("").</returns>
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == Reflector.GetMemberName(() => this.RepositoryPath))
+                {
+                    if (String.IsNullOrWhiteSpace(this.RepositoryPath))
+                    {
+                        return "Specify a directory.";
+                    }
+
+                    if (!Directory.Exists(this.RepositoryPath))
+                    {
+                        return "Directory doesn't exist.";
+                    }
+
+                    if (!Repository.IsValidRepository(this.RepositoryPath))
+                    {
+                        return "Not a valid git repository.";
+                    }
+                }
+
+                return String.Empty;
+            }
+        }
+
+        public string Error
+        {
+            get { return null; }
         }
     }
 }
