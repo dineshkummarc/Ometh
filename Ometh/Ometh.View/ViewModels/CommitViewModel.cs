@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Ometh.Core;
 using Rareform.Patterns.MVVM;
 
@@ -23,9 +24,9 @@ namespace Ometh.View.ViewModels
             get { return this.commit.CommitTime; }
         }
 
-        public string Tag
+        public IEnumerable<string> Tags
         {
-            get { return this.commit.Tag; }
+            get { return this.commit.Tags; }
         }
 
         public bool IsTagged

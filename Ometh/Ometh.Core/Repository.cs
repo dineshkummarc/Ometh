@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NGit.Api;
-using NGit.Errors;
 using NGit.Revwalk;
 using NGit.Storage.File;
 
@@ -62,7 +61,7 @@ namespace Ometh.Core
 
             foreach (KeyValuePair<string, string> pair in tags)
             {
-                this.commits[pair.Value].Tag = pair.Key;
+                this.commits[pair.Value].AddTag(pair.Key);
             }
         }
 
