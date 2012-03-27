@@ -49,8 +49,8 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <ItemsControl
-                                        Visibility="{Binding Path=IsTagged, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                        ItemsSource="{Binding Path=Tags}">
+                                        Visibility="{Binding Path=HasReferences, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        ItemsSource="{Binding Path=References}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <StackPanel Orientation="Horizontal" />
@@ -63,7 +63,7 @@
                                                     Padding="5, 2, 5, 2"
                                                     Background="CornflowerBlue">
                                                     <TextBlock
-                                                        Text="{Binding}"
+                                                        Text="{Binding Path=Name}"
                                                         Foreground="White" />
                                                 </Border>
                                             </DataTemplate>

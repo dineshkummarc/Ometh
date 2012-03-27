@@ -36,7 +36,7 @@ namespace Ometh.Core
         public void Load()
         {
             this.LoadCommits();
-            this.LoadTags();
+            this.LoadRefs();
         }
 
         private void LoadCommits()
@@ -52,16 +52,17 @@ namespace Ometh.Core
             }
         }
 
-        private void LoadTags()
+        private void LoadRefs()
         {
             var tags = this.git
                 .GetRepository()
-                .GetTags()
+                .GetAllRefs()
+                .Where(reference => reference.Key != "HEAD")
                 .ToDictionary(entry => entry.Key, entry => entry.Value.GetObjectId().Name);
 
             foreach (KeyValuePair<string, string> pair in tags)
             {
-                this.commits[pair.Value].AddTag(pair.Key);
+                this.commits[pair.Value].AddReference(new Reference(pair.Key));
             }
         }
 

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Ometh.Core
 {
     public class Commit : IEquatable<Commit>
     {
         private readonly HashSet<string> parents;
-        private List<string> tags;
+        private readonly List<Reference> references;
 
         public string ShortMessage { get; private set; }
 
@@ -24,14 +23,9 @@ namespace Ometh.Core
             get { return this.parents; }
         }
 
-        public IEnumerable<string> Tags
+        public IEnumerable<Reference> References
         {
-            get { return this.tags; }
-        }
-
-        public bool IsTagged
-        {
-            get { return this.tags.Any(); }
+            get { return this.references; }
         }
 
         public Commit(string hash, string fullMessage, string shortMessage, string author, DateTime commitTime, IEnumerable<string> parents)
@@ -42,7 +36,7 @@ namespace Ometh.Core
             this.Author = author;
             this.CommitTime = commitTime;
 
-            this.tags = new List<string>();
+            this.references = new List<Reference>();
 
             this.parents = new HashSet<string>();
 
@@ -52,9 +46,9 @@ namespace Ometh.Core
             }
         }
 
-        public void AddTag(string tag)
+        public void AddReference(Reference reference)
         {
-            this.tags.Add(tag);
+            this.references.Add(reference);
         }
 
         public bool Equals(Commit other)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ometh.Core;
 using Rareform.Patterns.MVVM;
 
@@ -24,14 +25,23 @@ namespace Ometh.View.ViewModels
             get { return this.commit.CommitTime; }
         }
 
-        public IEnumerable<string> Tags
+        public IEnumerable<ReferenceViewModel> References
         {
-            get { return this.commit.Tags; }
+            get
+            {
+                var refs = this.commit.References
+                    .OrderByDescending(reference => reference.IsTag)
+                    .ThenByDescending(reference => reference.IsHead)
+                    .ThenByDescending(reference => reference.IsRemote)
+                    .Select(reference => new ReferenceViewModel(reference));
+
+                return refs;
+            }
         }
 
-        public bool IsTagged
+        public bool HasReferences
         {
-            get { return this.commit.IsTagged; }
+            get { return this.References.Any(); }
         }
 
         public CommitViewModel(Commit commit)
