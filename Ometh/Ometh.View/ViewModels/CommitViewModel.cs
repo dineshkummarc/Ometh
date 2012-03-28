@@ -22,7 +22,7 @@ namespace Ometh.View.ViewModels
 
         public DateTime CommitTime
         {
-            get { return this.commit.CommitTime; }
+            get { return this.commit.CommitTime.ToLocalTime(); }
         }
 
         public IEnumerable<ReferenceViewModel> References
