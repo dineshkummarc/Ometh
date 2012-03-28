@@ -10,8 +10,6 @@ namespace Ometh.Core
 
         public string ShortMessage { get; private set; }
 
-        public string FullMessage { get; private set; }
-
         public string Author { get; private set; }
 
         public DateTime CommitTime { get; private set; }
@@ -28,10 +26,9 @@ namespace Ometh.Core
             get { return this.references; }
         }
 
-        public Commit(string hash, string fullMessage, string shortMessage, string author, DateTime commitTime, IEnumerable<string> parents)
+        public Commit(string hash, string shortMessage, string author, DateTime commitTime, IEnumerable<string> parents)
         {
             this.Hash = hash;
-            this.FullMessage = fullMessage;
             this.ShortMessage = shortMessage;
             this.Author = author;
             this.CommitTime = commitTime;

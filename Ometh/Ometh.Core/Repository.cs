@@ -80,7 +80,6 @@ namespace Ometh.Core
             return new Commit
             (
                 commit.Name,
-                commit.GetFullMessage(),
                 commit.GetShortMessage(),
                 commit.GetAuthorIdent().GetName(),
                 commit.GetCommitterIdent().GetWhen(),
