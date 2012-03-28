@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Ometh.Core;
 using Rareform.Patterns.MVVM;
@@ -51,7 +52,7 @@ namespace Ometh.View.ViewModels
             {
                 return new RelayCommand
                 (
-                    param =>
+                    param => Task.Factory.StartNew(() =>
                     {
                         this.currentRepository = new Repository(this.RepositoryPath);
                         this.currentRepository.Load();
@@ -59,7 +60,7 @@ namespace Ometh.View.ViewModels
                         this.OnPropertyChanged(vm => vm.Commits);
                         this.OnPropertyChanged(vm => vm.CommitCount);
                         this.OnPropertyChanged(vm => vm.HasCommits);
-                    },
+                    }),
                     param => !this.HasErrors(Reflector.GetMemberName(() => this.RepositoryPath))
                 );
             }
