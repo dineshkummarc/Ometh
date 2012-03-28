@@ -90,7 +90,7 @@ namespace Ometh.View.ViewModels
             get { return null; }
         }
 
-        public bool HasErrors(params string[] propertyName)
+        private bool HasErrors(params string[] propertyName)
         {
             return propertyName.Any(property => !String.IsNullOrEmpty(this[property]));
         }
