@@ -15,6 +15,7 @@ namespace Ometh.View.ViewModels
     {
         private string repositoryPath;
         private Repository currentRepository;
+        private CommitViewModel selectedCommit;
 
         public IEnumerable<CommitViewModel> Commits
         {
@@ -23,6 +24,16 @@ namespace Ometh.View.ViewModels
                 return this.currentRepository == null || this.currentRepository.Commits == null
                            ? null
                            : this.currentRepository.Commits.Select(commit => new CommitViewModel(commit));
+            }
+        }
+
+        public CommitViewModel SelectedCommit
+        {
+            get { return this.selectedCommit; }
+            set
+            {
+                this.selectedCommit = value;
+                this.OnPropertyChanged(vm => vm.SelectedCommit);
             }
         }
 

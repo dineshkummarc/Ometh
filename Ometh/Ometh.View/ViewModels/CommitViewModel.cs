@@ -10,9 +10,19 @@ namespace Ometh.View.ViewModels
     {
         private readonly Commit commit;
 
+        public string Hash
+        {
+            get { return this.commit.Hash; }
+        }
+
         public string ShortMessage
         {
             get { return this.commit.ShortMessage; }
+        }
+
+        public string FullMessage
+        {
+            get { return this.commit.GetFullMessage(); }
         }
 
         public string Author

@@ -7,6 +7,7 @@ namespace Ometh.Core
     {
         private readonly HashSet<string> parents;
         private readonly List<Reference> references;
+        private readonly Repository repository;
 
         public string ShortMessage { get; private set; }
 
@@ -26,8 +27,9 @@ namespace Ometh.Core
             get { return this.references; }
         }
 
-        public Commit(string hash, string shortMessage, string author, DateTime commitTime, IEnumerable<string> parents)
+        public Commit(Repository repository, string hash, string shortMessage, string author, DateTime commitTime, IEnumerable<string> parents)
         {
+            this.repository = repository;
             this.Hash = hash;
             this.ShortMessage = shortMessage;
             this.Author = author;
@@ -41,6 +43,11 @@ namespace Ometh.Core
             {
                 this.parents.Add(commit);
             }
+        }
+
+        public string GetFullMessage()
+        {
+            return this.repository.GetFullMessage(this.Hash);
         }
 
         public void AddReference(Reference reference)

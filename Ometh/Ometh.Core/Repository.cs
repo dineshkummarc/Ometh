@@ -34,6 +34,15 @@ namespace Ometh.Core
             return Directory.Exists(Path.Combine(path, ".git"));
         }
 
+        public string GetFullMessage(string hash)
+        {
+            var enumerable = this.git
+                .Log()
+                .Call();
+
+            return enumerable.First(commit => commit.Name == hash).GetFullMessage();
+        }
+
         public void Load()
         {
             this.LoadCommits();
@@ -45,7 +54,7 @@ namespace Ometh.Core
             var enumerable = this.git
                 .Log()
                 .Call()
-                .Select(ToCommit);
+                .Select(this.ToCommit);
 
             foreach (Commit commit in enumerable)
             {
@@ -75,10 +84,11 @@ namespace Ometh.Core
             }
         }
 
-        private static Commit ToCommit(RevCommit commit)
+        private Commit ToCommit(RevCommit commit)
         {
             return new Commit
             (
+                this,
                 commit.Name,
                 commit.GetShortMessage(),
                 commit.GetAuthorIdent().GetName(),
