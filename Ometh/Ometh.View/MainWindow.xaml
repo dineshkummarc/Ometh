@@ -60,8 +60,22 @@
                                             <DataTemplate>
                                                 <Border
                                                     Margin="0, 0, 5, 0"
-                                                    Padding="5, 2, 5, 2"
-                                                    Background="CornflowerBlue">
+                                                    Padding="5, 2, 5, 2">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Path=IsTag}" Value="True">
+                                                                    <Setter Property="Background" Value="CornflowerBlue" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Path=IsRemote}" Value="True">
+                                                                    <Setter Property="Background" Value="ForestGreen" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Path=IsHead}" Value="True">
+                                                                    <Setter Property="Background" Value="Firebrick" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
                                                     <TextBlock
                                                         Text="{Binding Path=Name}"
                                                         Foreground="White" />
