@@ -12,17 +12,15 @@ namespace Ometh.View.ViewModels
 {
     internal class MainViewModel : ViewModelBase<MainViewModel>, IDataErrorInfo
     {
-        private IEnumerable<CommitViewModel> commits;
         private string repositoryPath;
         private Repository currentRepository;
 
         public IEnumerable<CommitViewModel> Commits
         {
-            get { return this.commits; }
-            private set
+            get
             {
-                this.commits = value;
-                this.OnPropertyChanged(vm => vm.Commits);
+                return this.currentRepository.Commits
+                    .Select(commit => new CommitViewModel(commit));
             }
         }
 
@@ -47,8 +45,7 @@ namespace Ometh.View.ViewModels
                         this.currentRepository = new Repository(this.RepositoryPath);
                         this.currentRepository.Load();
 
-                        this.Commits = this.currentRepository.Commits
-                            .Select(commit => new CommitViewModel(commit));
+                        this.OnPropertyChanged(vm => vm.Commits);
                     },
                     param => !this.HasErrors(Reflector.GetMemberName(() => this.RepositoryPath))
                 );
