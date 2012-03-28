@@ -102,6 +102,7 @@
             Background="#FF41B1E1"
             Foreground="White">
             <StatusBarItem
+                Margin="5, 0, 0, 0"
                 Visibility="{Binding Path=HasCommits, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding Path=CommitCount}" />
