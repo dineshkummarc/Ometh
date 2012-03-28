@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using NGit;
 using NGit.Api;
 using NGit.Revwalk;
 using NGit.Storage.File;
@@ -36,11 +37,11 @@ namespace Ometh.Core
 
         public string GetFullMessage(string hash)
         {
-            var enumerable = this.git
-                .Log()
-                .Call();
+            var walk = new ObjectWalk(this.git.GetRepository());
 
-            return enumerable.First(commit => commit.Name == hash).GetFullMessage();
+            RevCommit commit = walk.ParseCommit(ObjectId.FromString(hash));
+
+            return commit.GetFullMessage();
         }
 
         public void Load()
