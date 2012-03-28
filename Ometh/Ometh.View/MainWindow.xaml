@@ -22,6 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel
             Grid.Row="0"
@@ -95,5 +96,31 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <StatusBar
+            Grid.Row="2"
+            Height="25"
+            Background="#FF41B1E1"
+            Foreground="White">
+            <StatusBarItem
+                Visibility="{Binding Path=HasCommits, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Path=CommitCount}" />
+                    <TextBlock>
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Setters>
+                                    <Setter Property="Text" Value=" revisions" />
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=CommitCount}" Value="1">
+                                        <Setter Property="Text" Value=" revision" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Controls:MetroWindow>

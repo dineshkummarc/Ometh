@@ -19,9 +19,20 @@ namespace Ometh.View.ViewModels
         {
             get
             {
-                return this.currentRepository.Commits
-                    .Select(commit => new CommitViewModel(commit));
+                return this.currentRepository == null || this.currentRepository.Commits == null
+                           ? null
+                           : this.currentRepository.Commits.Select(commit => new CommitViewModel(commit));
             }
+        }
+
+        public int CommitCount
+        {
+            get { return this.Commits.Count(); }
+        }
+
+        public bool HasCommits
+        {
+            get { return this.Commits != null && this.Commits.Any(); }
         }
 
         public string RepositoryPath
@@ -46,6 +57,8 @@ namespace Ometh.View.ViewModels
                         this.currentRepository.Load();
 
                         this.OnPropertyChanged(vm => vm.Commits);
+                        this.OnPropertyChanged(vm => vm.CommitCount);
+                        this.OnPropertyChanged(vm => vm.HasCommits);
                     },
                     param => !this.HasErrors(Reflector.GetMemberName(() => this.RepositoryPath))
                 );
