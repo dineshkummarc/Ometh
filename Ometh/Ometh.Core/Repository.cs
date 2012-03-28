@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using NGit.Api;
@@ -62,7 +63,15 @@ namespace Ometh.Core
 
             foreach (KeyValuePair<string, string> pair in tags)
             {
-                this.commits[pair.Value].AddReference(new Reference(pair.Key));
+                if (this.commits.ContainsKey(pair.Value))
+                {
+                    this.commits[pair.Value].AddReference(new Reference(pair.Key));
+                }
+
+                else
+                {
+                    Debug.WriteLine("Could not find commit " + pair.Value);
+                }
             }
         }
 
