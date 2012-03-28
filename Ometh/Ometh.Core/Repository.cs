@@ -37,9 +37,11 @@ namespace Ometh.Core
 
         public string GetFullMessage(string hash)
         {
-            var walk = new ObjectWalk(this.git.GetRepository());
+            var walk = new RevWalk(this.git.GetRepository());
 
             RevCommit commit = walk.ParseCommit(ObjectId.FromString(hash));
+
+            walk.Dispose();
 
             return commit.GetFullMessage();
         }
