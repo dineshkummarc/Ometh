@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace Ometh.View
@@ -19,7 +20,10 @@ namespace Ometh.View
 
             dialog.ShowDialog();
 
-            this.viewModel.RepositoryPath = dialog.SelectedPath;
+            if (!String.IsNullOrEmpty(dialog.SelectedPath))
+            {
+                this.viewModel.RepositoryPath = dialog.SelectedPath;
+            }
         }
     }
 }
