@@ -167,9 +167,10 @@
                         Style="{StaticResource MarkableTextBlockStyle}"
                         Text="{Binding Path=CommitterName, Mode=OneWay}" />
                 </Grid>
-                <ScrollViewer Grid.Row="1">
+                <ScrollViewer
+                    Grid.Row="1"
+                    Margin="10, 5, 0, 5">
                     <TextBox
-                        Margin="10, 5, 0, 5"
                         Style="{StaticResource MarkableTextBlockStyle}"
                         Text="{Binding Path=FullMessage, Mode=OneWay}" />
                 </ScrollViewer>
