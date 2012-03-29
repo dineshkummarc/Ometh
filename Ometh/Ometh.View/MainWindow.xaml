@@ -99,7 +99,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Author}" Header="Author" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=AuthorName}" Header="Author" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=CommitTime}" Header="Date" />
                 </GridView>
             </ListView.View>
@@ -109,18 +109,66 @@
             Height="5"
             VerticalAlignment="Top"
             HorizontalAlignment="Stretch" />
-        <StackPanel
-            Grid.Row="2"
-            Margin="10, 10, 10, 5"
-            DataContext="{Binding Path=SelectedCommit}">
-            <TextBox
-                Style="{StaticResource MarkableTextBlockStyle}"
-                Text="{Binding Path=Hash, StringFormat=Hash: \{0\}, Mode=OneWay}" />
-            <TextBox
-                Style="{StaticResource MarkableTextBlockStyle}"
-                Margin="0, 10, 0, 0"
-                Text="{Binding Path=FullMessage, Mode=OneWay}" />
-        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=SelectedCommit}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <StackPanel
+                Margin="10, 10, 10, 5"
+                DataContext="{Binding Path=SelectedCommit}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="Hash:" />
+                    <TextBox
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Margin="10, 0, 0, 0"
+                        Style="{StaticResource MarkableTextBlockStyle}"
+                        Text="{Binding Path=Hash, Mode=OneWay}" />
+                    <TextBlock
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Text="Author:" />
+                    <TextBox
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Margin="10, 0, 0, 0"
+                        Style="{StaticResource MarkableTextBlockStyle}"
+                        Text="{Binding Path=AuthorName, Mode=OneWay}" />
+                    <TextBlock
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Text="Committer:" />
+                    <TextBox
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Margin="10, 0, 0, 0"
+                        Style="{StaticResource MarkableTextBlockStyle}"
+                        Text="{Binding Path=CommitterName, Mode=OneWay}" />
+                </Grid>
+                <TextBox
+                    Style="{StaticResource MarkableTextBlockStyle}"
+                    Margin="0, 10, 0, 0"
+                    Text="{Binding Path=FullMessage, Mode=OneWay}" />
+            </StackPanel>
+        </Grid>
         <StatusBar
             Grid.Row="3"
             Height="25"

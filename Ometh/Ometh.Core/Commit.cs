@@ -11,7 +11,9 @@ namespace Ometh.Core
 
         public string ShortMessage { get; private set; }
 
-        public string Author { get; private set; }
+        public Person Author { get; private set; }
+
+        public Person Committer { get; private set; }
 
         public DateTime CommitTime { get; private set; }
 
@@ -27,12 +29,13 @@ namespace Ometh.Core
             get { return this.references; }
         }
 
-        public Commit(Repository repository, string hash, string shortMessage, string author, DateTime commitTime, IEnumerable<string> parents)
+        public Commit(Repository repository, string hash, string shortMessage, Person author, Person commiter, DateTime commitTime, IEnumerable<string> parents)
         {
             this.repository = repository;
             this.Hash = hash;
             this.ShortMessage = shortMessage;
             this.Author = author;
+            this.Committer = commiter;
             this.CommitTime = commitTime;
 
             this.references = new List<Reference>();

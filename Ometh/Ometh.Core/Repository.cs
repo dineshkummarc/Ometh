@@ -94,10 +94,16 @@ namespace Ometh.Core
                 this,
                 commit.Name,
                 commit.GetShortMessage(),
-                commit.GetAuthorIdent().GetName(),
+                ToPerson(commit.GetAuthorIdent()),
+                ToPerson(commit.GetCommitterIdent()),
                 commit.GetCommitterIdent().GetWhen(),
                 commit.Parents.Select(p => p.Name)
             );
+        }
+
+        private static Person ToPerson(PersonIdent ident)
+        {
+            return new Person(ident.GetName(), ident.GetEmailAddress());
         }
     }
 }
