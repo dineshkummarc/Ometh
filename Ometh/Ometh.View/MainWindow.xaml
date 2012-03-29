@@ -178,7 +178,7 @@
                         Grid.Row="1"
                         Margin="10, 0, 0, 0"
                         Style="{StaticResource MarkableTextBlockStyle}"
-                        Text="{Binding Path=AuthorName, Mode=OneWay}" />
+                        Text="{Binding Path=AuthorFullInfo, Mode=OneWay}" />
                     <TextBlock
                         Grid.Column="0"
                         Grid.Row="2"
@@ -188,7 +188,7 @@
                         Grid.Row="2"
                         Margin="10, 0, 0, 0"
                         Style="{StaticResource MarkableTextBlockStyle}"
-                        Text="{Binding Path=CommitterName, Mode=OneWay}" />
+                        Text="{Binding Path=CommitterFullInfo, Mode=OneWay}" />
                 </Grid>
                 <ScrollViewer
                     Grid.Row="1"

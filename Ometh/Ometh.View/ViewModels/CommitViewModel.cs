@@ -30,19 +30,14 @@ namespace Ometh.View.ViewModels
             get { return this.commit.Author.Name; }
         }
 
-        public string AuthorEmail
+        public string AuthorFullInfo
         {
-            get { return this.commit.Author.Email; }
+            get { return this.commit.Author.Name + " (" + this.commit.Author.Email + ")"; }
         }
 
-        public string CommitterName
+        public string CommitterFullInfo
         {
-            get { return this.commit.Committer.Name; }
-        }
-
-        public string CommiterAuthor
-        {
-            get { return this.commit.Committer.Email; }
+            get { return this.commit.Committer.Name + " (" + this.commit.Committer.Email + ")"; }
         }
 
         public DateTime CommitTime
