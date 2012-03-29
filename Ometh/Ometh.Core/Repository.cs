@@ -13,11 +13,11 @@ namespace Ometh.Core
     public class Repository
     {
         private readonly Git git;
-        private readonly Dictionary<string, Commit> commits;
+        private readonly List<Commit> commits;
 
         public IEnumerable<Commit> Commits
         {
-            get { return this.commits.Values; }
+            get { return this.commits; }
         }
 
         public Repository(string path)
@@ -26,7 +26,7 @@ namespace Ometh.Core
                 throw new ArgumentNullException("path");
 
             this.git = new Git(new FileRepository(Path.Combine(path, ".git")));
-            this.commits = new Dictionary<string, Commit>();
+            this.commits = new List<Commit>();
         }
 
         public static bool IsValidRepository(string path)
@@ -61,7 +61,7 @@ namespace Ometh.Core
 
             foreach (Commit commit in enumerable)
             {
-                this.commits.Add(commit.Hash, commit);
+                this.commits.Add(commit);
             }
         }
 
@@ -75,9 +75,11 @@ namespace Ometh.Core
 
             foreach (KeyValuePair<string, string> pair in tags)
             {
-                if (this.commits.ContainsKey(pair.Value))
+                var commit = this.commits.FirstOrDefault(p => p.Hash == pair.Value);
+
+                if (commit != null)
                 {
-                    this.commits[pair.Value].AddReference(new Reference(pair.Key));
+                    commit.AddReference(new Reference(pair.Key));
                 }
 
                 else
