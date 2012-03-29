@@ -80,6 +80,7 @@ namespace Ometh.View.ViewModels
                         this.currentRepository = new Repository(this.RepositoryPath);
 
                         this.IsLoadingRepository = true;
+                        this.SelectedCommit = null;
 
                         this.currentRepository.Load();
 
