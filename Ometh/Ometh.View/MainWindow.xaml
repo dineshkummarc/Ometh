@@ -119,10 +119,14 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <StackPanel
-                Margin="10, 10, 10, 5"
-                DataContext="{Binding Path=SelectedCommit}">
-                <Grid>
+            <Grid DataContext="{Binding Path=SelectedCommit}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid
+                    Grid.Row="0"
+                    Margin="10, 10, 0, 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -163,11 +167,13 @@
                         Style="{StaticResource MarkableTextBlockStyle}"
                         Text="{Binding Path=CommitterName, Mode=OneWay}" />
                 </Grid>
-                <TextBox
-                    Style="{StaticResource MarkableTextBlockStyle}"
-                    Margin="0, 10, 0, 0"
-                    Text="{Binding Path=FullMessage, Mode=OneWay}" />
-            </StackPanel>
+                <ScrollViewer Grid.Row="1">
+                    <TextBox
+                        Margin="10, 5, 0, 5"
+                        Style="{StaticResource MarkableTextBlockStyle}"
+                        Text="{Binding Path=FullMessage, Mode=OneWay}" />
+                </ScrollViewer>
+            </Grid>
         </Grid>
         <StatusBar
             Grid.Row="3"
