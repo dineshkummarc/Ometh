@@ -46,64 +46,87 @@
                 Content="Open Repository"
                 Command="{Binding Path=OpenRepositoryCommand}" />
         </StackPanel>
-        <ListView
-            Grid.Row="1"
-            ScrollViewer.CanContentScroll="True"
-            ItemsSource="{Binding Path=Commits}"
-            SelectedItem="{Binding Path=SelectedCommit}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Message">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <ItemsControl
-                                        Visibility="{Binding Path=HasReferences, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                        ItemsSource="{Binding Path=References}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border
-                                                    Margin="0, 0, 5, 0"
-                                                    Padding="5, 2, 5, 2">
-                                                    <Border.Style>
-                                                        <Style TargetType="Border">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Path=IsTag}" Value="True">
-                                                                    <Setter Property="Background" Value="CornflowerBlue" />
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding Path=IsRemote}" Value="True">
-                                                                    <Setter Property="Background" Value="ForestGreen" />
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding Path=IsHead}" Value="True">
-                                                                    <Setter Property="Background" Value="Firebrick" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Border.Style>
-                                                    <TextBlock
-                                                        Text="{Binding Path=Name}"
-                                                        Foreground="White" />
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                    <TextBlock
-                                        Text="{Binding Path=ShortMessage}"
-                                        VerticalAlignment="Center" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=AuthorName}" Header="Author" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=CommitTime}" Header="Date" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid Grid.Row="1">
+            <ListView
+                ScrollViewer.CanContentScroll="True"
+                ItemsSource="{Binding Path=Commits}"
+                SelectedItem="{Binding Path=SelectedCommit}">
+                <ListView.Style>
+                    <Style TargetType="ListView" BasedOn="{StaticResource {x:Type ListView}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsLoadingRepository}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Style>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Message">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ItemsControl
+                                            Visibility="{Binding Path=HasReferences, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                            ItemsSource="{Binding Path=References}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border
+                                                        Margin="0, 0, 5, 0"
+                                                        Padding="5, 2, 5, 2">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Path=IsTag}" Value="True">
+                                                                        <Setter Property="Background" Value="CornflowerBlue" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Path=IsRemote}" Value="True">
+                                                                        <Setter Property="Background" Value="ForestGreen" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding Path=IsHead}" Value="True">
+                                                                        <Setter Property="Background" Value="Firebrick" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock
+                                                            Text="{Binding Path=Name}"
+                                                            Foreground="White" />
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                        <TextBlock
+                                            Text="{Binding Path=ShortMessage}"
+                                            VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=AuthorName}" Header="Author" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=CommitTime}" Header="Date" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <StackPanel
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Visibility="{Binding Path=IsLoadingRepository, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ProgressBar
+                    Height="15"
+                    Width="175"
+                    IsIndeterminate="True" />
+                <TextBlock
+                    Text="Loading repository..."
+                    Margin="0, 5, 0, 0"
+                    HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
         <GridSplitter
             Grid.Row="2"
             Height="5"

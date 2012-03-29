@@ -16,6 +16,7 @@ namespace Ometh.View.ViewModels
         private string repositoryPath;
         private Repository currentRepository;
         private CommitViewModel selectedCommit;
+        private bool isLoadingRepository;
 
         public IEnumerable<CommitViewModel> Commits
         {
@@ -47,6 +48,16 @@ namespace Ometh.View.ViewModels
             get { return this.Commits != null && this.Commits.Any(); }
         }
 
+        public bool IsLoadingRepository
+        {
+            get { return this.isLoadingRepository; }
+            private set
+            {
+                this.isLoadingRepository = value;
+                this.OnPropertyChanged(vm => vm.IsLoadingRepository);
+            }
+        }
+
         public string RepositoryPath
         {
             get { return this.repositoryPath; }
@@ -63,10 +74,16 @@ namespace Ometh.View.ViewModels
             {
                 return new RelayCommand
                 (
+
                     param => Task.Factory.StartNew(() =>
                     {
                         this.currentRepository = new Repository(this.RepositoryPath);
+
+                        this.IsLoadingRepository = true;
+
                         this.currentRepository.Load();
+
+                        this.IsLoadingRepository = false;
 
                         this.OnPropertyChanged(vm => vm.Commits);
                         this.OnPropertyChanged(vm => vm.CommitCount);
