@@ -15,6 +15,9 @@ namespace Ometh.Core
         private readonly Git git;
         private readonly List<Commit> commits;
 
+        // Store the hashes as key for lookup when loading the refs
+        private readonly Dictionary<string, Commit> commitLookup;
+
         public IEnumerable<Commit> Commits
         {
             get { return this.commits; }
@@ -27,6 +30,7 @@ namespace Ometh.Core
 
             this.git = new Git(new FileRepository(Path.Combine(path, ".git")));
             this.commits = new List<Commit>();
+            this.commitLookup = new Dictionary<string, Commit>();
         }
 
         public static bool IsValidRepository(string path)
@@ -62,6 +66,7 @@ namespace Ometh.Core
             foreach (Commit commit in enumerable)
             {
                 this.commits.Add(commit);
+                this.commitLookup.Add(commit.Hash, commit);
             }
         }
 
@@ -75,9 +80,9 @@ namespace Ometh.Core
 
             foreach (KeyValuePair<string, string> pair in tags)
             {
-                var commit = this.commits.FirstOrDefault(p => p.Hash == pair.Value);
+                Commit commit;
 
-                if (commit != null)
+                if (this.commitLookup.TryGetValue(pair.Value, out commit))
                 {
                     commit.AddReference(new Reference(pair.Key));
                 }
