@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Ometh.Core;
 using Rareform.Patterns.MVVM;
@@ -128,6 +130,21 @@ namespace Ometh.View.ViewModels
         public string Error
         {
             get { return null; }
+        }
+
+        public MainViewModel()
+        {
+#if DEBUG
+            // If we are debugging, load the own repository
+            if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+            {
+                this.RepositoryPath =
+                    new DirectoryInfo(Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.Parent.Parent.
+                        FullName;
+
+                this.OpenRepositoryCommand.Execute(null);
+            }
+#endif
         }
 
         private bool HasErrors(params string[] propertyName)
