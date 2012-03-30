@@ -66,9 +66,11 @@ namespace Ometh.Core
 
             IEnumerable<DiffEntry> entries = DiffEntry.Scan(walk);
 
-            return entries
-                .Where(diff => diff.GetNewId().Name != diff.GetOldId().Name)
-                .Select(diff => new FileDiff(diff.GetNewPath()));
+            var diffs = entries.Where(diff => diff.GetNewId().Name != diff.GetOldId().Name);
+
+            return from diffEntry in diffs
+                   let diffType = ToDiffType(diffEntry.GetChangeType())
+                   select new FileDiff(diffEntry.GetNewPath(), diffType);
         }
 
         public void Load()
@@ -82,7 +84,7 @@ namespace Ometh.Core
             var enumerable = this.git
                 .Log()
                 .Call()
-                .Select(this.ToCommit);
+                .Select(commit => ToCommit(commit, this));
 
             foreach (Commit commit in enumerable)
             {
@@ -115,11 +117,11 @@ namespace Ometh.Core
             }
         }
 
-        private Commit ToCommit(RevCommit commit)
+        private static Commit ToCommit(RevCommit commit, Repository repository)
         {
             return new Commit
             (
-                this,
+                repository,
                 commit.Name,
                 commit.GetShortMessage(),
                 ToPerson(commit.GetAuthorIdent()),
@@ -132,6 +134,29 @@ namespace Ometh.Core
         private static Person ToPerson(PersonIdent ident)
         {
             return new Person(ident.GetName(), ident.GetEmailAddress());
+        }
+
+        private static DiffType ToDiffType(DiffEntry.ChangeType changeType)
+        {
+            switch (changeType)
+            {
+                case DiffEntry.ChangeType.MODIFY:
+                    return DiffType.Modify;
+
+                case DiffEntry.ChangeType.ADD:
+                    return DiffType.Add;
+
+                case DiffEntry.ChangeType.DELETE:
+                    return DiffType.Delete;
+
+                case DiffEntry.ChangeType.COPY:
+                    return DiffType.Copy;
+
+                case DiffEntry.ChangeType.RENAME:
+                    return DiffType.Rename;
+            }
+
+            throw new InvalidOperationException();
         }
     }
 }

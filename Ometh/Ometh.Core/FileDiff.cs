@@ -4,9 +4,12 @@
     {
         public string Path { get; private set; }
 
-        public FileDiff(string path)
+        public DiffType DiffType { get; private set; }
+
+        public FileDiff(string path, DiffType diffType)
         {
             this.Path = path;
+            this.DiffType = diffType;
         }
     }
 }
