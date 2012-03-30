@@ -190,13 +190,28 @@
                         Style="{StaticResource MarkableTextBlockStyle}"
                         Text="{Binding Path=CommitterFullInfo, Mode=OneWay}" />
                 </Grid>
-                <ScrollViewer
-                    Grid.Row="1"
-                    Margin="10, 5, 0, 5">
-                    <TextBox
-                        Style="{StaticResource MarkableTextBlockStyle}"
-                        Text="{Binding Path=FullMessage, Mode=OneWay}" />
-                </ScrollViewer>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ScrollViewer
+                        Grid.Column="0"
+                        Margin="10, 5, 0, 5">
+                        <TextBox
+                            Style="{StaticResource MarkableTextBlockStyle}"
+                            Text="{Binding Path=FullMessage, Mode=OneWay}" />
+                    </ScrollViewer>
+                    <Grid Grid.Column="1">
+                        <ListBox ItemsSource="{Binding Path=FileDiffs}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Path}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
         <StatusBar

@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using NGit;
 using NGit.Api;
+using NGit.Diff;
 using NGit.Revwalk;
 using NGit.Storage.File;
+using NGit.Treewalk;
 
 namespace Ometh.Core
 {
@@ -48,6 +51,24 @@ namespace Ometh.Core
             walk.Dispose();
 
             return commit.GetFullMessage();
+        }
+
+        public IEnumerable<FileDiff> GetFileDiffs(string newHash, string oldHash)
+        {
+            NGit.Repository repo = this.git.GetRepository();
+
+            ObjectId newCommit = repo.Resolve(newHash + "^{tree}");
+            ObjectId oldCommit = repo.Resolve(oldHash + "^{tree}");
+
+            var walk = new TreeWalk(repo) { Recursive = true };
+            walk.AddTree(oldCommit);
+            walk.AddTree(newCommit);
+
+            IEnumerable<DiffEntry> entries = DiffEntry.Scan(walk);
+
+            return entries
+                .Where(diff => diff.GetNewId().Name != diff.GetOldId().Name)
+                .Select(diff => new FileDiff(diff.GetNewPath()));
         }
 
         public void Load()

@@ -59,6 +59,15 @@ namespace Ometh.View.ViewModels
             }
         }
 
+        public IEnumerable<FileDiffViewModel> FileDiffs
+        {
+            get
+            {
+                return this.commit.GetFileDiffs()
+                    .Select(diff => new FileDiffViewModel(diff));
+            }
+        }
+
         public bool HasReferences
         {
             get { return this.References.Any(); }

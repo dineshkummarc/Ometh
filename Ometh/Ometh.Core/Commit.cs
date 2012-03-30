@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ometh.Core
 {
@@ -51,6 +52,11 @@ namespace Ometh.Core
         public string GetFullMessage()
         {
             return this.repository.GetFullMessage(this.Hash);
+        }
+
+        public IEnumerable<FileDiff> GetFileDiffs()
+        {
+            return this.repository.GetFileDiffs(this.Hash, this.parents.First());
         }
 
         public void AddReference(Reference reference)
