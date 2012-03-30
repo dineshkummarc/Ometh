@@ -56,7 +56,9 @@ namespace Ometh.Core
 
         public IEnumerable<FileDiff> GetFileDiffs()
         {
-            return this.repository.GetFileDiffs(this.Hash, this.parents.First());
+            return this.parents.Any()
+                       ? this.repository.GetFileDiffs(this.Hash, this.parents.First())
+                       : Enumerable.Empty<FileDiff>();
         }
 
         public void AddReference(Reference reference)
