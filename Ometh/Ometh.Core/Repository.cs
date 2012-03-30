@@ -70,7 +70,8 @@ namespace Ometh.Core
 
             return from diffEntry in diffs
                    let diffType = ToDiffType(diffEntry.GetChangeType())
-                   select new FileDiff(diffEntry.GetNewPath(), diffType);
+                   let path = diffType == DiffType.Delete ? diffEntry.GetOldPath() : diffEntry.GetNewPath()
+                   select new FileDiff(path, diffType);
         }
 
         public void Load()
