@@ -143,74 +143,122 @@
                 </Style>
             </Grid.Style>
             <Grid DataContext="{Binding Path=SelectedCommit}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid
-                    Grid.Row="0"
-                    Margin="10, 10, 0, 0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <TextBlock
-                        Grid.Column="0"
+                    <Grid
                         Grid.Row="0"
-                        Text="Hash:" />
-                    <TextBox
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        Margin="10, 0, 0, 0"
-                        Style="{StaticResource MarkableTextBlockStyle}"
-                        Text="{Binding Path=Hash, Mode=OneWay}" />
-                    <TextBlock
-                        Grid.Column="0"
-                        Grid.Row="1"
-                        Text="Author:" />
-                    <TextBox
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        Margin="10, 0, 0, 0"
-                        Style="{StaticResource MarkableTextBlockStyle}"
-                        Text="{Binding Path=AuthorFullInfo, Mode=OneWay}" />
-                    <TextBlock
-                        Grid.Column="0"
-                        Grid.Row="2"
-                        Text="Committer:" />
-                    <TextBox
-                        Grid.Column="1"
-                        Grid.Row="2"
-                        Margin="10, 0, 0, 0"
-                        Style="{StaticResource MarkableTextBlockStyle}"
-                        Text="{Binding Path=CommitterFullInfo, Mode=OneWay}" />
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <ScrollViewer
-                        Grid.Column="0"
-                        Margin="10, 5, 0, 5">
+                        Margin="10, 10, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Text="Hash:" />
                         <TextBox
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Margin="10, 0, 0, 0"
                             Style="{StaticResource MarkableTextBlockStyle}"
-                            Text="{Binding Path=FullMessage, Mode=OneWay}" />
-                    </ScrollViewer>
-                    <Grid Grid.Column="1">
-                        <ListBox ItemsSource="{Binding Path=FileDiffs}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Path}" />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                            Text="{Binding Path=Hash, Mode=OneWay}" />
+                        <TextBlock
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Text="Author:" />
+                        <TextBox
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Margin="10, 0, 0, 0"
+                            Style="{StaticResource MarkableTextBlockStyle}"
+                            Text="{Binding Path=AuthorFullInfo, Mode=OneWay}" />
+                        <TextBlock
+                            Grid.Column="0"
+                            Grid.Row="2"
+                            Text="Committer:" />
+                        <TextBox
+                            Grid.Column="1"
+                            Grid.Row="2"
+                            Margin="10, 0, 0, 0"
+                            Style="{StaticResource MarkableTextBlockStyle}"
+                            Text="{Binding Path=CommitterFullInfo, Mode=OneWay}" />
                     </Grid>
+                    <Grid Grid.Row="1">
+                        <ScrollViewer Margin="10, 5, 0, 5">
+                            <TextBox
+                                Style="{StaticResource MarkableTextBlockStyle}"
+                                Text="{Binding Path=FullMessage, Mode=OneWay}" />
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <ListBox
+                        Margin="5"
+                        ItemsSource="{Binding Path=FileDiffs}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                <Setter Property="MinHeight" Value="25" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <Border x:Name="Border"
+                                                    Background="{TemplateBinding Background}"
+                                                    SnapsToDevicePixels="true">
+                                                <ContentPresenter
+                                                        Margin="5, 0, 0, 0"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Border" Property="BorderBrush" Value="#FF143C65" />
+                                                    <Setter Property="Background" TargetName="Border" Value="{DynamicResource AccentColorBrush}" />
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Border" Property="Background">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Color="{DynamicResource AccentColor3}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="IsSelected" Value="True" />
+                                                        <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter Property="Background" TargetName="Border">
+                                                        <Setter.Value>
+                                                            <SolidColorBrush Color="{DynamicResource AccentColor2}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="BorderBrush" TargetName="Border" Value="#FF143C65" />
+                                                </MultiTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Path}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Grid>
             </Grid>
         </Grid>
