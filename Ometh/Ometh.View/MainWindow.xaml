@@ -255,7 +255,34 @@
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Path=Path}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="5">
+                                        <Rectangle.Style>
+                                            <Style TargetType="Rectangle">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=DiffType}" Value="Add">
+                                                        <Setter Property="Fill" Value="Green" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=DiffType}" Value="Modify">
+                                                        <Setter Property="Fill" Value="Yellow" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=DiffType}" Value="Delete">
+                                                        <Setter Property="Fill" Value="Red" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=DiffType}" Value="Rename">
+                                                        <Setter Property="Fill" Value="Blue" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=DiffType}" Value="Copy">
+                                                        <Setter Property="Fill" Value="Orange" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                    <TextBlock
+                                        Margin="5, 0, 0, 0"
+                                        Text="{Binding Path=Path}" />
+                                </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

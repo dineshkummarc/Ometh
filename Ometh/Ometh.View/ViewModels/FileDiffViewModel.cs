@@ -11,6 +11,11 @@ namespace Ometh.View.ViewModels
             get { return this.fileDiff.Path; }
         }
 
+        public DiffType DiffType
+        {
+            get { return this.fileDiff.DiffType; }
+        }
+
         public FileDiffViewModel(FileDiff fileDiff)
         {
             this.fileDiff = fileDiff;
