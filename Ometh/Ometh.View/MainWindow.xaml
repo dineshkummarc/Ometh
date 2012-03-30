@@ -22,6 +22,14 @@
                 <Setter Property="IsReadOnly" Value="True" />
                 <Setter Property="TextWrapping" Value="Wrap" />
             </Style>
+            <SolidColorBrush  x:Key="TagColor" Color="CornflowerBlue" />
+            <SolidColorBrush  x:Key="HeadColor" Color="Firebrick" />
+            <SolidColorBrush  x:Key="RemoteColor" Color="ForestGreen" />
+            <SolidColorBrush  x:Key="AddColor" Color="ForestGreen" />
+            <SolidColorBrush  x:Key="DeleteColor" Color="Firebrick" />
+            <SolidColorBrush  x:Key="ModifyColor" Color="Yellow" />
+            <SolidColorBrush  x:Key="RenameColor" Color="Blue" />
+            <SolidColorBrush  x:Key="CopyColor" Color="Orange" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -83,13 +91,13 @@
                                                             <Style TargetType="Border">
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding Path=IsTag}" Value="True">
-                                                                        <Setter Property="Background" Value="CornflowerBlue" />
+                                                                        <Setter Property="Background" Value="{StaticResource TagColor}" />
                                                                     </DataTrigger>
                                                                     <DataTrigger Binding="{Binding Path=IsRemote}" Value="True">
-                                                                        <Setter Property="Background" Value="ForestGreen" />
+                                                                        <Setter Property="Background" Value="{StaticResource RemoteColor}" />
                                                                     </DataTrigger>
                                                                     <DataTrigger Binding="{Binding Path=IsHead}" Value="True">
-                                                                        <Setter Property="Background" Value="Firebrick" />
+                                                                        <Setter Property="Background" Value="{StaticResource HeadColor}" />
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
@@ -261,19 +269,19 @@
                                             <Style TargetType="Rectangle">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Path=DiffType}" Value="Add">
-                                                        <Setter Property="Fill" Value="Green" />
+                                                        <Setter Property="Fill" Value="{StaticResource AddColor}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Path=DiffType}" Value="Modify">
-                                                        <Setter Property="Fill" Value="Yellow" />
+                                                        <Setter Property="Fill" Value="{StaticResource ModifyColor}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Path=DiffType}" Value="Delete">
-                                                        <Setter Property="Fill" Value="Red" />
+                                                        <Setter Property="Fill" Value="{StaticResource DeleteColor}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Path=DiffType}" Value="Rename">
-                                                        <Setter Property="Fill" Value="Blue" />
+                                                        <Setter Property="Fill" Value="{StaticResource RenameColor}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Path=DiffType}" Value="Copy">
-                                                        <Setter Property="Fill" Value="Orange" />
+                                                        <Setter Property="Fill" Value="{StaticResource CopyColor}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
