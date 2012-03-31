@@ -138,8 +138,7 @@ namespace Ometh.View.ViewModels
             if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 this.RepositoryPath =
-                    new DirectoryInfo(Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.Parent.Parent.
-                        FullName;
+                    Path.GetFullPath(Assembly.GetExecutingAssembly().Location + "/../../../../../");
 
                 this.OpenRepositoryCommand.Execute(null);
             }
