@@ -76,7 +76,6 @@ namespace Ometh.View.ViewModels
             {
                 return new RelayCommand
                 (
-
                     param => Task.Factory.StartNew(() =>
                     {
                         this.currentRepository = new Repository(this.RepositoryPath);
