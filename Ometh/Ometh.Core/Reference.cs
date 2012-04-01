@@ -18,9 +18,9 @@ namespace Ometh.Core
             this.IsRemote = fullName.StartsWith("refs/remotes/");
             this.IsTag = fullName.StartsWith("refs/tags/");
 
-            this.Name = !this.IsRemote
-                            ? fullName.Substring(fullName.LastIndexOf('/') + 1)
-                            : fullName.Replace("refs/remotes/", String.Empty);
+            this.Name = this.IsRemote
+                            ? fullName.Replace("refs/remotes/", String.Empty)
+                            : fullName.Substring(fullName.LastIndexOf('/') + 1);
         }
     }
 }
