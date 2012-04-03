@@ -125,14 +125,14 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Visibility="{Binding Path=IsLoadingRepository, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock
+                    Text="Loading repository..."
+                    HorizontalAlignment="Center" />
                 <ProgressBar
                     Height="15"
                     Width="175"
-                    IsIndeterminate="True" />
-                <TextBlock
-                    Text="Loading repository..."
                     Margin="0, 5, 0, 0"
-                    HorizontalAlignment="Center"/>
+                    IsIndeterminate="True" />
             </StackPanel>
         </Grid>
         <GridSplitter
